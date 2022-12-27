@@ -8,7 +8,7 @@ contract WavePortal {
     uint256 totalWaves;
     uint members;
 
-    constructor() {
+    constructor() payable {
         console.log('test 12');
     }
 
@@ -26,6 +26,14 @@ contract WavePortal {
         console.log('%s has waved', msg.sender);
         waves.push(Wave(msg.sender, block.timestamp));
         emit NewWave(msg.sender, block.timestamp);
+
+        uint256 prizeAmount = 0.0001 ether;
+        require(
+            prizeAmount <= address(this).balance,
+            "Trying to withdraw more money than the contract has."
+        );
+        (bool success, ) = (msg.sender).call{value: prizeAmount}("");
+        require(success, "Failed to withdraw money from contract.");
     }
 
     function setMembers(uint256 x) public{
