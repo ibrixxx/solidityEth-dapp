@@ -40,7 +40,7 @@ contract WavePortal {
         members = x;
     }
 
-    function getMembers() public view returns (uint256){
+    function getMembers() public view returns (uint256) {
         console.log('We have %d total members!', members);
         return members;
     }
